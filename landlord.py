@@ -6,10 +6,6 @@ class Landlord:
         self.phone = phone
         self.address = address
         self.agent_id = agent_id
-
-
- 
-
-        
+   
 
 
