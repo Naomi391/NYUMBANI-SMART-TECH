@@ -110,6 +110,15 @@ def landlord_options():
                 print(f"Agent ID: {agent[0]}, Name: {agent[1]}, Email: {agent[2]}, Phone: {agent[3]}, Agency: {agent[4]}")
         else:
             print("No agents found.")
+
+    elif user_input == '4':
+        leased_apartments_data = get_leased_properties_data()
+        if leased_apartments_data:
+            print("List of Leased Apartments:")
+            for apartment in leased_apartments_data:
+                print(f"Property ID: {apartment[1]}, Lease Start Date: {apartment[3]}, Lease End Date: {apartment[4]}, Rent Amount: {apartment[5]}, Security Deposit: {apartment[6]}, Tenant Name: {apartment[7]}")
+        else:
+            print("No leased apartments found.")
         
 
 def tenant_options():
