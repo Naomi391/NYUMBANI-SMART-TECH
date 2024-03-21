@@ -155,6 +155,17 @@ def tenant_options():
         else:
             print("No rent payments found.")
 
+    elif user_input == '4':
+        eviction_notices_data = get_eviction_notices_data()
+        if eviction_notices_data:
+            print("List of Eviction Notices:")
+            for notice in eviction_notices_data:
+                print(f"Notice ID: {notice[0]}, Property ID: {notice[1]}, Tenant Name: {notice[6]}, Notice Date: {notice[3]}, Message: {notice[4]}")
+        else:
+            print("No eviction notices found.")
+    else:
+        print("Invalid choice. Please try again.")
+
 
 
 def main():
