@@ -69,6 +69,7 @@ def delete_tenant(tenantID):
 
 def agent_options():
     print("Agent options:")
+    print("0. Exit")
     print("1. Display agents")
     print("2. Display landlords")
     print("3. Display properties")
@@ -80,7 +81,11 @@ def agent_options():
 
     user_input = input("Enter your choice: ")
 
-    if user_input == '1':
+    if user_input == '0':
+        print("Exiting the program. Goodbye!")
+        exit()
+
+    elif user_input == '1':
         agents_data = get_agents_data()
         if agents_data:
             print("List of Agents:")
@@ -149,6 +154,7 @@ def agent_options():
 
 def landlord_options():
     print("Landlord options:")
+    print("0. Exit")
     print("1. Display agents")
     print("2. Display leased apartments")
     print("3. Display the rents paid")
@@ -156,7 +162,11 @@ def landlord_options():
 
     user_input = input("Enter your choice: ")
     
-    if user_input == '1':
+    if user_input == '0':
+        print("Exiting the program. Goodbye!")
+        exit()
+
+    elif user_input == '1':
         agents_data = get_agents_data()
         if agents_data:
             print("List of Agents:")
@@ -196,12 +206,17 @@ def landlord_options():
 
 def tenant_options():
     print("Tenant options:")
+    print("0. Exit")
     print("1. Display the rents paid")
     print("2. Display the eviction notices")
 
     user_input = input("Enter your choice: ")
 
-    if user_input == '1':
+    if user_input == '0':
+        print("Exiting the program. Goodbye!")
+        exit()
+
+    elif user_input == '1':
         rent_payments_data = get_rent_payments_data()
         if rent_payments_data:
             print("List of Rent Payments:")
@@ -226,13 +241,18 @@ def tenant_options():
 def main():
     print("Welcome to Nyumbani Smart Tech CLI")
     print("Please select an option:")
+    print("0. Exit")
     print("1. Agent login")
     print("2. Landlord login")
     print("3. Tenant login")
 
     user_input = input("Enter your choice: ")
     
-    if user_input == '1':
+    if user_input == '0':
+        print("Exiting the program. Goodbye!")
+        exit()
+
+    elif user_input == '1':
         user_role = agent_login()
         if user_role == 'Agent':
             print("Agent login successful. Proceeding to agent options...")
