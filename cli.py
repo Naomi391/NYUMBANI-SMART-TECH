@@ -1,4 +1,3 @@
-# Import necessary modules
 import sqlite3
 from helpers import get_agents_data, get_landlords_data, get_tenants_data, get_properties_data, get_leased_properties_data, get_rent_payments_data, get_eviction_notices_data
 
@@ -30,6 +29,23 @@ def tenant_login():
     
     return None
 
+def add_tenant(TenantID, Name, Email, Phone, Address, AgentID):
+        conn = sqlite3.connect('realestate.db')
+        cursor = conn.cursor()
+
+        print("Adding a new tenant:")
+        sql = '''INSERT INTO Tenants (TenantID, Name, Email, Phone, Address, AgentID) 
+             VALUES (?, ?, ?, ?, ?, ?)'''
+        
+        cursor.execute(sql, (TenantID, Name, Email, Phone, Address, AgentID))
+
+        conn.commit()
+        
+        cursor.close()
+        conn.close()
+        
+        print("New tenant added successfully.")
+
 def agent_options():
     print("Agent options:")
     print("1. Display agents")
@@ -38,8 +54,12 @@ def agent_options():
     print("4. Display leased apartments")
     print("5. Display the rents paid")
     print("6. Display the eviction notices")
+    print("7. Add a new tenant")
+    print("8. Delete a tenant") 
 
     user_input = input("Enter your choice: ")
+
+    
     
     if user_input == '1':
         agents_data = get_agents_data()
@@ -57,6 +77,7 @@ def agent_options():
                 print(f"Landlord ID: {landlord[0]}, Name: {landlord[1]}, Email: {landlord[2]}, Phone: {landlord[3]}, Agent Name: {landlord[6]}")
         else:
             print("No landlords found.")
+
     elif user_input == '3':
         properties_data = get_properties_data()
         if properties_data:
@@ -89,6 +110,16 @@ def agent_options():
                 print(f"Notice ID: {notice[0]}, Property ID: {notice[1]}, Tenant Name: {notice[6]}, Notice Date: {notice[3]}, Message: {notice[4]}")
         else:
             print("No eviction notices found.")
+
+    elif user_input == '7':
+        ID = input("Enter tenant's ID: ")
+        name = input("Enter tenant's name: ")
+        email = input("Enter tenant's email: ")
+        phone = input("Enter tenant's phone: ")
+        address = input("Enter tenant's address: ")
+        agentID = input("Enter tenant's agent ID: ")
+
+        add_tenant(ID, name, email, phone, address, agentID) 
     else:
         print("Invalid choice. Please try again.")
 
