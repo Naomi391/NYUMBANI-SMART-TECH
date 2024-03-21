@@ -100,6 +100,18 @@ def landlord_options():
     print("3. Display the rents paid")
     print("4. Display the eviction notices")
 
+    user_input = input("Enter your choice: ")
+    
+    if user_input == '1':
+        agents_data = get_agents_data()
+        if agents_data:
+            print("List of Agents:")
+            for agent in agents_data:
+                print(f"Agent ID: {agent[0]}, Name: {agent[1]}, Email: {agent[2]}, Phone: {agent[3]}, Agency: {agent[4]}")
+        else:
+            print("No agents found.")
+        
+
 def tenant_options():
     print("Tenant options:")
     print("1. Display the rents paid")
