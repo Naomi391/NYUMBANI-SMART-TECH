@@ -129,7 +129,7 @@ def landlord_options():
         else:
             print("No rent payments found.")
 
-    elif user_input == '6':
+    elif user_input == '4':
         eviction_notices_data = get_eviction_notices_data()
         if eviction_notices_data:
             print("List of Eviction Notices:")
