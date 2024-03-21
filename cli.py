@@ -78,6 +78,7 @@ def agent_options():
     print("6. Display the eviction notices")
     print("7. Add a new tenant")
     print("8. Delete a tenant") 
+    print("9. Go Back")
 
     user_input = input("Enter your choice: ")
 
@@ -149,6 +150,10 @@ def agent_options():
         tenantID = input("Enter tenant's ID to delete: ")
         delete_tenant(tenantID)
 
+    elif user_input == '9':
+        print("Going back to the main menu...")
+        return "back"
+
     else:
         print("Invalid choice. Please try again.")
 
@@ -159,6 +164,7 @@ def landlord_options():
     print("2. Display leased apartments")
     print("3. Display the rents paid")
     print("4. Display the eviction notices")
+    print("5. Go Back")
 
     user_input = input("Enter your choice: ")
     
@@ -201,6 +207,11 @@ def landlord_options():
                 print(f"Notice ID: {notice[0]}, Property ID: {notice[1]}, Tenant Name: {notice[6]}, Notice Date: {notice[3]}, Message: {notice[4]}")
         else:
             print("No eviction notices found.")
+
+    elif user_input == '5':
+        print("Going back to the main menu...")
+        return "back"
+    
     else:
         print("Invalid choice. Please try again.")
 
@@ -209,6 +220,7 @@ def tenant_options():
     print("0. Exit")
     print("1. Display the rents paid")
     print("2. Display the eviction notices")
+    print("3. Go Back")
 
     user_input = input("Enter your choice: ")
 
@@ -233,6 +245,11 @@ def tenant_options():
                 print(f"Notice ID: {notice[0]}, Property ID: {notice[1]}, Tenant Name: {notice[6]}, Notice Date: {notice[3]}, Message: {notice[4]}")
         else:
             print("No eviction notices found.")
+
+    elif user_input == '3':
+        print("Going back to the main menu...")
+        return "back"
+    
     else:
         print("Invalid choice. Please try again.")
 
@@ -245,6 +262,7 @@ def main():
     print("1. Agent login")
     print("2. Landlord login")
     print("3. Tenant login")
+    print("4. Go Back")
 
     user_input = input("Enter your choice: ")
     
@@ -273,6 +291,11 @@ def main():
             tenant_options()
         else:
             print("Tenant login failed. Please try again or register as a tenant.")
+
+    elif user_input == '4':
+        print("Going back to the main menu...")
+        return "back"
+    
     else:
         print("Invalid choice. Please try again.")
 
