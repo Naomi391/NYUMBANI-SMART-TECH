@@ -6,3 +6,5 @@ class CommunicationLog:
         self.date = date
         self.message = message
         self.status = status
+
+

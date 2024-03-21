@@ -23,3 +23,4 @@ class AgentRepository:
             agents.append(agent)
         conn.close()
         return agents
+

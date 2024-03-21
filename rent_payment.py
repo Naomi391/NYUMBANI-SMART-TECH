@@ -6,3 +6,5 @@ class RentPayment:
         self.payment_date = payment_date
         self.amount_paid = amount_paid
         self.payment_method = payment_method
+
+
