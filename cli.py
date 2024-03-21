@@ -46,6 +46,27 @@ def add_tenant(TenantID, Name, Email, Phone, Address, AgentID):
         
         print("New tenant added successfully.")
 
+    
+def delete_tenant(tenantID):
+    conn = sqlite3.connect('realestate.db')
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM Tenants WHERE TenantID = ?", (tenantID,))
+    existing_tenant = cursor.fetchone()
+
+    if existing_tenant:
+        sql = '''DELETE FROM Tenants WHERE TenantID = ?'''
+
+        cursor.execute(sql, (tenantID,))
+
+        conn.commit()
+        conn.close()
+
+        print("Tenant deleted successfully.")
+    else:
+        print("Tenant with ID", tenantID, "has already been deleted.")
+
+
 def agent_options():
     print("Agent options:")
     print("1. Display agents")
@@ -59,8 +80,6 @@ def agent_options():
 
     user_input = input("Enter your choice: ")
 
-    
-    
     if user_input == '1':
         agents_data = get_agents_data()
         if agents_data:
@@ -120,6 +139,11 @@ def agent_options():
         agentID = input("Enter tenant's agent ID: ")
 
         add_tenant(ID, name, email, phone, address, agentID) 
+
+    elif user_input == '8':  
+        tenantID = input("Enter tenant's ID to delete: ")
+        delete_tenant(tenantID)
+
     else:
         print("Invalid choice. Please try again.")
 
