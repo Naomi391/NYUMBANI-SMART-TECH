@@ -120,7 +120,7 @@ def landlord_options():
         else:
             print("No leased apartments found.")
         
-    elif user_input == '5':
+    elif user_input == '3':
         rent_payments_data = get_rent_payments_data()
         if rent_payments_data:
             print("List of Rent Payments:")
