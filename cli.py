@@ -23,7 +23,6 @@ def landlord_login():
 def tenant_login():
     email = input("Enter tenant's email: ")
     password = input("Enter tenant's password: ")
-    
     tenants_data = get_tenants_data()
     for tenant in tenants_data:
         if tenant[2] == email and tenant[3] == password:
@@ -144,6 +143,10 @@ def tenant_options():
     print("Tenant options:")
     print("1. Display the rents paid")
     print("2. Display the eviction notices")
+
+    user_input = input("Enter your choice: ")
+
+    
 
 def main():
     print("Welcome to Nyumbani Smart Tech CLI")
