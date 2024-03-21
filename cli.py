@@ -63,7 +63,7 @@ def agent_options():
         if properties_data:
             print("List of Properties:")
             for property in properties_data:
-                print(f"Property ID: {property[0]}, Name: {property[1]}, Address: {property[2]}, Type: {property[3]}, Rent: {property[4]}")
+                print(f"Property ID: {property[0]},     Name: {property[1]},    Address: {property[2]},     Landlord Name: {property[4]},   Type: {property[5]}")
         else:
             print("No properties found.")
     elif user_input == '4':
@@ -71,7 +71,7 @@ def agent_options():
         if leased_apartments_data:
             print("List of Leased Apartments:")
             for apartment in leased_apartments_data:
-                print(f"Apartment ID: {apartment[0]}, Property ID: {apartment[1]}, Tenant ID: {apartment[2]}, Lease Start Date: {apartment[3]}, Lease End Date: {apartment[4]}")
+                print(f"Property ID: {apartment[1]}, Lease Start Date: {apartment[3]}, Lease End Date: {apartment[4]}, Rent Amount: {apartment[5]}, Security Deposit: {apartment[6]}, Tenant Name: {apartment[7]}")
         else:
             print("No leased apartments found.")
     elif user_input == '5':
@@ -79,7 +79,7 @@ def agent_options():
         if rent_payments_data:
             print("List of Rent Payments:")
             for payment in rent_payments_data:
-                print(f"Payment ID: {payment[0]}, Property ID: {payment[1]}, Tenant ID: {payment[2]}, Amount: {payment[3]}, Payment Date: {payment[4]}")
+                print(f"Payment ID: {payment[0]}, Property ID: {payment[1]}, Tenant Name: {payment[5]}, Amount: {payment[3]}, Payment Date: {payment[2]}, Payment Method: {payment[4]}")
         else:
             print("No rent payments found.")
     elif user_input == '6':
@@ -87,7 +87,7 @@ def agent_options():
         if eviction_notices_data:
             print("List of Eviction Notices:")
             for notice in eviction_notices_data:
-                print(f"Notice ID: {notice[0]}, Property ID: {notice[1]}, Tenant ID: {notice[2]}, Notice Date: {notice[3]}, Reason: {notice[4]}")
+                print(f"Notice ID: {notice[0]}, Property ID: {notice[1]}, Tenant Name: {notice[6]}, Notice Date: {notice[3]}, Message: {notice[4]}")
         else:
             print("No eviction notices found.")
     else:
