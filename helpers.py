@@ -16,6 +16,14 @@ def get_landlords_data():
     conn.close()
     return landlords_data
 
+def get_tenants_data():
+    conn = sqlite3.connect('realestate.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM Tenants")
+    tenants_data = cursor.fetchall()
+    conn.close()
+    return tenants_data
+
 def get_properties_data():
     conn = sqlite3.connect('realestate.db')
     cursor = conn.cursor()
@@ -61,3 +69,4 @@ def get_eviction_notices_data():
     eviction_notices_data = cursor.fetchall()
     conn.close()
     return eviction_notices_data
+
