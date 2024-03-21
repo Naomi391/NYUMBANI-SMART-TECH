@@ -111,7 +111,7 @@ def landlord_options():
         else:
             print("No agents found.")
 
-    elif user_input == '4':
+    elif user_input == '2':
         leased_apartments_data = get_leased_properties_data()
         if leased_apartments_data:
             print("List of Leased Apartments:")
