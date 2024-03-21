@@ -146,7 +146,16 @@ def tenant_options():
 
     user_input = input("Enter your choice: ")
 
-    
+    if user_input == '1':
+        rent_payments_data = get_rent_payments_data()
+        if rent_payments_data:
+            print("List of Rent Payments:")
+            for payment in rent_payments_data:
+                print(f"Payment ID: {payment[0]}, Property ID: {payment[1]}, Tenant Name: {payment[5]}, Amount: {payment[3]}, Payment Date: {payment[2]}, Payment Method: {payment[4]}")
+        else:
+            print("No rent payments found.")
+
+
 
 def main():
     print("Welcome to Nyumbani Smart Tech CLI")
