@@ -16,8 +16,9 @@ def landlord_login():
     landlords_data = get_landlords_data()
     for landlord in landlords_data:
         if landlord[2] == email and landlord[3] == password:
-            return 'Landlord'
+            return 'Landlord', email
     return None
+
 
 def tenant_login():
     email = input("Enter tenant's email: ")
@@ -157,7 +158,10 @@ def agent_options():
     else:
         print("Invalid choice. Please try again.")
 
-def landlord_options():
+def landlord_options(landlord_email):
+    conn = sqlite3.connect('realestate.db')
+    cursor = conn.cursor()
+
     print("Landlord options:")
     print("0. Exit")
     print("1. Display agents")
@@ -173,22 +177,28 @@ def landlord_options():
         exit()
 
     elif user_input == '1':
-        agents_data = get_agents_data()
-        if agents_data:
-            print("List of Agents:")
+        cursor.execute("SELECT Agents.* FROM Agents INNER JOIN Landlords ON Agents.AgentID = Landlords.AgentID WHERE Landlords.Email = ?", (landlord_email,))
+        agents_data = cursor.fetchall()
+
+        if agents_data: 
+            print("List of my Agents:")
             for agent in agents_data:
                 print(f"Agent ID: {agent[0]}, Name: {agent[1]}, Email: {agent[2]}, Phone: {agent[3]}, Agency: {agent[4]}")
         else:
             print("No agents found.")
 
     elif user_input == '2':
-        leased_apartments_data = get_leased_properties_data()
+    # Query to retrieve leased apartments belonging to the logged-in landlord using INNER JOIN
+        cursor.execute("SELECT Leases.*, Properties.* FROM Leases INNER JOIN Properties ON Leases.PropertyID = Properties.PropertyID INNER JOIN Landlords ON Properties.LandlordID = Landlords.LandlordID WHERE Landlords.Email = ?", (landlord_email,))
+        leased_apartments_data = cursor.fetchall()
+
         if leased_apartments_data:
-            print("List of Leased Apartments:")
+            print("List of My Leased Apartments:")
             for apartment in leased_apartments_data:
-                print(f"Property ID: {apartment[1]}, Lease Start Date: {apartment[3]}, Lease End Date: {apartment[4]}, Rent Amount: {apartment[5]}, Security Deposit: {apartment[6]}, Tenant Name: {apartment[7]}")
+                print(f"Lease ID: {apartment[0]}, Tenant ID: {apartment[1]}, Property ID: {apartment[2]}, Lease Start Date: {apartment[3]}, Lease End Date: {apartment[4]}, Rent Amount: {apartment[5]}, Security Deposit: {apartment[6]}, Tenant Name: {apartment[7]}, Property Name: {apartment[9]}, Address: {apartment[10]}")
         else:
             print("No leased apartments found.")
+
         
     elif user_input == '3':
         rent_payments_data = get_rent_payments_data()
@@ -214,6 +224,9 @@ def landlord_options():
     
     else:
         print("Invalid choice. Please try again.")
+
+    cursor.close()
+    conn.close()
 
 def tenant_options():
     print("Tenant options:")
@@ -278,10 +291,11 @@ def main():
         else:
             print("Agent login failed. Please try again or register as an agent.")
     elif user_input == '2':
-        user_role = landlord_login()
-        if user_role == 'Landlord':
+        login_result = landlord_login()
+        if login_result:
+            user_role, landlord_email = login_result
             print("Landlord login successful. Proceeding to landlord options...")
-            landlord_options()
+            landlord_options(landlord_email)
         else:
             print("Landlord login failed. Please try again or register as a landlord.")
     elif user_input == '3':
