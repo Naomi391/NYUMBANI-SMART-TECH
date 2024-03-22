@@ -26,7 +26,7 @@ def tenant_login():
     tenants_data = get_tenants_data()
     for tenant in tenants_data:
         if tenant[2] == email and tenant[3] == password:
-            return 'Tenant'
+            return 'Tenant', email
     
     return None
 
@@ -203,7 +203,7 @@ def landlord_options(landlord_email):
     elif user_input == '3':
         cursor.execute("SELECT RentPayments.* FROM RentPayments INNER JOIN Leases ON RentPayments.LeaseID = Leases.LeaseID INNER JOIN Properties ON Leases.PropertyID = Properties.PropertyID INNER JOIN Landlords ON Properties.LandlordID = Landlords.LandlordID WHERE Landlords.Email = ?", (landlord_email,))
         rent_payments_data = cursor.fetchall()
-        
+
         if rent_payments_data:
             print("List of Rent Payments:")
             for payment in rent_payments_data:
@@ -212,7 +212,9 @@ def landlord_options(landlord_email):
             print("No rent payments found.")
 
     elif user_input == '4':
-        eviction_notices_data = get_eviction_notices_data()
+        cursor.execute("SELECT EvictionNotices.* FROM EvictionNotices INNER JOIN Leases ON EvictionNotices.LeaseID = Leases.LeaseID INNER JOIN Properties ON Leases.PropertyID = Properties.PropertyID INNER JOIN Landlords ON Properties.LandlordID = Landlords.LandlordID WHERE Landlords.Email = ?", (landlord_email,))
+        eviction_notices_data = cursor.fetchall()
+
         if eviction_notices_data:
             print("List of Eviction Notices:")
             for notice in eviction_notices_data:
@@ -230,7 +232,10 @@ def landlord_options(landlord_email):
     cursor.close()
     conn.close()
 
-def tenant_options():
+def tenant_options(logged_in_tenant_email):
+    conn = sqlite3.connect('realestate.db')
+    cursor = conn.cursor()
+
     print("Tenant options:")
     print("0. Exit")
     print("1. Display the rents paid")
@@ -244,16 +249,21 @@ def tenant_options():
         exit()
 
     elif user_input == '1':
-        rent_payments_data = get_rent_payments_data()
+        cursor.execute("SELECT RentPayments.* FROM RentPayments INNER JOIN Tenants ON RentPayments.TenantName = Tenants.Name WHERE Tenants.Email = ?", (logged_in_tenant_email,))
+        rent_payments_data = cursor.fetchall()
+
         if rent_payments_data:
-            print("List of Rent Payments:")
+            print("List of My Latest Rent Payment:")
             for payment in rent_payments_data:
                 print(f"Payment ID: {payment[0]}, Property ID: {payment[1]}, Tenant Name: {payment[5]}, Amount: {payment[3]}, Payment Date: {payment[2]}, Payment Method: {payment[4]}")
         else:
             print("No rent payments found.")
 
     elif user_input == '2':
-        eviction_notices_data = get_eviction_notices_data()
+        cursor.execute("SELECT EvictionNotices.* FROM EvictionNotices INNER JOIN Tenants ON EvictionNotices.TenantName = Tenants.Name WHERE Tenants.Email = ?", (logged_in_tenant_email,))
+        
+        eviction_notices_data = cursor.fetchall()
+
         if eviction_notices_data:
             print("List of Eviction Notices:")
             for notice in eviction_notices_data:
@@ -267,6 +277,9 @@ def tenant_options():
     
     else:
         print("Invalid choice. Please try again.")
+
+    cursor.close()
+    conn.close()
 
 
 
@@ -301,10 +314,11 @@ def main():
         else:
             print("Landlord login failed. Please try again or register as a landlord.")
     elif user_input == '3':
-        user_role = tenant_login()
-        if user_role == 'Tenant':
+        login_result = tenant_login()
+        if login_result:
+            user_role, logged_in_tenant_email = login_result
             print("Tenant login successful. Proceeding to tenant options...")
-            tenant_options()
+            tenant_options(logged_in_tenant_email)
         else:
             print("Tenant login failed. Please try again or register as a tenant.")
 
