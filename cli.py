@@ -1,4 +1,5 @@
 import sqlite3
+from colorama import Fore, Style
 from helpers import get_agents_data, get_landlords_data, get_tenants_data, get_properties_data, get_leased_properties_data, get_rent_payments_data, get_eviction_notices_data
 
 def agent_login():
@@ -34,7 +35,7 @@ def add_tenant(TenantID, Name, Email, Phone, Address, AgentID):
         conn = sqlite3.connect('realestate.db')
         cursor = conn.cursor()
 
-        print("Adding a new tenant:")
+        print(Fore.GREEN + "Adding a new tenant: ")
         sql = '''INSERT INTO Tenants (TenantID, Name, Email, Phone, Address, AgentID) 
              VALUES (?, ?, ?, ?, ?, ?)'''
         
