@@ -201,7 +201,9 @@ def landlord_options(landlord_email):
 
         
     elif user_input == '3':
-        rent_payments_data = get_rent_payments_data()
+        cursor.execute("SELECT RentPayments.* FROM RentPayments INNER JOIN Leases ON RentPayments.LeaseID = Leases.LeaseID INNER JOIN Properties ON Leases.PropertyID = Properties.PropertyID INNER JOIN Landlords ON Properties.LandlordID = Landlords.LandlordID WHERE Landlords.Email = ?", (landlord_email,))
+        rent_payments_data = cursor.fetchall()
+        
         if rent_payments_data:
             print("List of Rent Payments:")
             for payment in rent_payments_data:
